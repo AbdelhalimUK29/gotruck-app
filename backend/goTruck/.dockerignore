@@ -1,0 +1,15 @@
+# Build context exclusions
+target/
+.idea/
+*.iml
+
+# VCS
+.git/
+.gitignore
+.gitattributes
+
+# Docs / wrapper (mvn from the maven image is used instead)
+HELP.md
+mvnw
+mvnw.cmd
+.mvn/

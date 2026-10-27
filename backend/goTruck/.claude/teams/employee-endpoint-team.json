@@ -1,0 +1,75 @@
+{
+  "name": "employee-endpoint-team",
+  "description": "Agent team for implementing employee endpoint with filtering, pagination, and security",
+  "agents": [
+    {
+      "name": "backend-planer",
+      "role": "planner",
+      "model": "nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b",
+      "agentFile": ".claude/agents/backend-planer.md"
+    },
+    {
+      "name": "plan-reviewer",
+      "role": "reviewer",
+      "model": "nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b",
+      "agentFile": ".claude/agents/plan-reviewer.md"
+    },
+    {
+      "name": "backend-builder",
+      "role": "builder",
+      "model": "nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b",
+      "agentFile": ".claude/agents/backend-builder.md"
+    },
+    {
+      "name": "backend-checker",
+      "role": "checker",
+      "model": "nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b",
+      "agentFile": ".claude/agents/backend-checker.md"
+    }
+  ],
+  "workflow": [
+    {
+      "step": 1,
+      "from": "backend-planer",
+      "to": "plan-reviewer",
+      "action": "send_plan_for_review"
+    },
+    {
+      "step": 2,
+      "from": "plan-reviewer",
+      "to": "backend-planer",
+      "action": "send_feedback_or_approve",
+      "condition": "if_changes_needed"
+    },
+    {
+      "step": 3,
+      "from": "plan-reviewer",
+      "to": "backend-builder",
+      "action": "send_approved_plan",
+      "condition": "if_approved"
+    },
+    {
+      "step": 4,
+      "from": "backend-builder",
+      "to": "backend-checker",
+      "action": "send_implementation_for_review"
+    },
+    {
+      "step": 5,
+      "from": "backend-checker",
+      "to": "backend-builder",
+      "action": "send_feedback_or_approve",
+      "condition": "if_changes_needed"
+    },
+    {
+      "step": 6,
+      "from": "backend-checker",
+      "action": "report_completion",
+      "condition": "if_approved"
+    }
+  ],
+  "settings": {
+    "teammateMode": "in-process",
+    "maxIterations": 3
+  }
+}

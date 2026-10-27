@@ -1,0 +1,132 @@
+# ============================================================
+# ROOT .gitignore for goTruck project
+# ============================================================
+
+# ------------------------------------------------------------
+# Environment files (all projects)
+# ------------------------------------------------------------
+.env
+.env.*
+
+# ------------------------------------------------------------
+# Frontend (go-truck)
+# ------------------------------------------------------------
+
+# dependencies
+frontend/go-truck/node_modules/
+frontend/go-truck/.pnp
+frontend/go-truck/.pnp.*
+frontend/go-truck/.yarn/*
+!frontend/go-truck/.yarn/patches
+!frontend/go-truck/.yarn/plugins
+!frontend/go-truck/.yarn/releases
+!frontend/go-truck/.yarn/versions
+
+# testing
+frontend/go-truck/coverage/
+
+# next.js
+frontend/go-truck/.next/
+frontend/go-truck/out/
+
+# production
+frontend/go-truck/build/
+
+# misc
+frontend/go-truck/.DS_Store
+frontend/go-truck/*.pem
+frontend/go-truck/project_practice.md
+
+# debug
+frontend/go-truck/npm-debug.log*
+frontend/go-truck/yarn-debug.log*
+frontend/go-truck/yarn-error.log*
+frontend/go-truck/.pnpm-debug.log*
+
+# vercel
+frontend/go-truck/.vercel
+
+# typescript
+frontend/go-truck/*.tsbuildinfo
+frontend/go-truck/next-env.d.ts
+
+# ------------------------------------------------------------
+# Backend (goTruck)
+# ------------------------------------------------------------
+backend/goTruck/HELP.md
+backend/goTruck/target/
+backend/goTruck/.mvn/wrapper/maven-wrapper.jar
+!backend/goTruck/**/src/main/**/target/
+!backend/goTruck/**/src/test/**/target/
+
+### STS ###
+backend/goTruck/.apt_generated
+backend/goTruck/.classpath
+backend/goTruck/.factorypath
+backend/goTruck/.project
+backend/goTruck/.settings
+backend/goTruck/.springBeans
+backend/goTruck/.sts4-cache
+
+### IntelliJ IDEA ###
+backend/goTruck/.idea
+backend/goTruck/*.iws
+backend/goTruck/*.iml
+backend/goTruck/*.ipr
+
+### NetBeans ###
+backend/goTruck/nbproject/private/
+backend/goTruck/nbbuild/
+backend/goTruck/dist/
+backend/goTruck/nbdist/
+backend/goTruck/.nb-gradle/
+backend/goTruck/build/
+!backend/goTruck/**/src/main/**/build/
+!backend/goTruck/**/src/test/**/build/
+
+### VS Code ###
+backend/goTruck/.vscode/
+
+# Environment files (backend)
+backend/goTruck/.env
+backend/goTruck/.env.*
+
+# Documentation and scripts (backend)
+backend/goTruck/AGENT_TEAM_README.md
+backend/goTruck/start-employee-endpoint-team.sh
+backend/goTruck/docs/
+
+# ------------------------------------------------------------
+# Infrastructure
+# ------------------------------------------------------------
+
+# Docker volumes and data (local development)
+infastructure/postgres/data/
+infastructure/mailpit/
+infastructure/postgres/logs/
+infastructure/keycloak/realm
+
+# Editor and IDE files
+infastructure/.vscode/
+infastructure/.idea/
+infastructure/*.swp
+infastructure/*.swo
+infastructure/*~
+
+# OS files
+infastructure/.DS_Store
+infastructure/Thumbs.db
+
+# ------------------------------------------------------------
+# General / OS / Editor (root level)
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Microsoft Office temporary files
+~$*

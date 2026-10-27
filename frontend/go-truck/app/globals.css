@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #F97316;
+  --color-primary-hover: #EA580C;
+  --color-light-orange: #FED7AA;
+  --color-bg: #FAFAFA;
+  --color-card: #FFFFFF;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-disabled: #9CA3AF;
+  --color-border: #E5E7EB;
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+  --color-warning: #FACC15;
+  --color-info: #3B82F6;
+  --font-family-sans: "Geist", sans-serif;
+  --font-family-mono: "Geist Mono", monospace;
+}
+
+
+body {
+  font-family: "Geist", sans-serif;
+  background-color: var(--color-bg);
+  color: #111827;
+}
+
+@keyframes hero-scene-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scene-fade-in {
+    animation: hero-scene-fade-in 0.7s ease-out;
+  }
+}

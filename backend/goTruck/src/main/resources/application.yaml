@@ -1,0 +1,138 @@
+app:
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000}
+    allowed-methods: ${APP_CORS_ALLOWED_METHODS:GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD}
+    allowed-headers: ${APP_CORS_ALLOWED_HEADERS:Authorization,Content-Type,Accept,Origin,Idempotency-Key}
+    allow-credentials: ${APP_CORS_ALLOW_CREDENTIALS:false}
+    max-age: ${APP_CORS_MAX_AGE:3600}
+
+  provisioning:
+    scheduler-enabled: ${APP_PROVISIONING_SCHEDULER_ENABLED:true}
+    poll-interval: ${APP_PROVISIONING_POLL_INTERVAL:5s}
+    initial-delay: ${APP_PROVISIONING_INITIAL_DELAY:10s}
+    batch-size: ${APP_PROVISIONING_BATCH_SIZE:10}
+    lease-duration: ${APP_PROVISIONING_LEASE_DURATION:2m}
+    worker-id: ${APP_PROVISIONING_WORKER_ID:}
+    backoff-base: ${APP_PROVISIONING_BACKOFF_BASE:2s}
+    backoff-max: ${APP_PROVISIONING_BACKOFF_MAX:5m}
+    http-connect-timeout: ${APP_PROVISIONING_HTTP_CONNECT_TIMEOUT:5s}
+    http-read-timeout: ${APP_PROVISIONING_HTTP_READ_TIMEOUT:15s}
+    retention: ${APP_PROVISIONING_RETENTION:30d}
+    retention-interval: ${APP_PROVISIONING_RETENTION_INTERVAL:1h}
+
+  storage:
+    minio:
+      endpoint: ${APP_STORAGE_MINIO_ENDPOINT}
+      access-key: ${APP_STORAGE_MINIO_ACCESS_KEY}
+      secret-key: ${APP_STORAGE_MINIO_SECRET_KEY}
+      temp-bucket: ${APP_STORAGE_MINIO_TEMP_BUCKET}
+      public-bucket: ${APP_STORAGE_MINIO_PUBLIC_BUCKET}
+
+  media:
+    logo:
+      max-upload-size: ${APP_MEDIA_LOGO_MAX_UPLOAD_SIZE:10MB}
+      max-width: ${APP_MEDIA_LOGO_MAX_WIDTH:1024}
+      max-height: ${APP_MEDIA_LOGO_MAX_HEIGHT:1024}
+      quality: ${APP_MEDIA_LOGO_QUALITY:0.85}
+      redis-ttl: ${APP_MEDIA_LOGO_REDIS_TTL:30m}
+      temp-retention: ${APP_MEDIA_LOGO_TEMP_RETENTION:24h}
+      allowed-formats: ${APP_MEDIA_LOGO_ALLOWED_FORMATS:JPEG,PNG,WEBP}
+
+spring:
+
+  application:
+    name: gotruck-api
+
+  datasource:
+
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/gotruck}
+
+    username: ${SPRING_DATASOURCE_USERNAME}
+
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  jpa:
+
+    hibernate:
+      ddl-auto: validate
+
+    open-in-view: false
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  keycloak:
+    issuer-uri: ${KEYCLOAK_ISSUER_URI}
+    jwk-set-uri: ${KEYCLOAK_JWK_SET_URI}
+    admin:
+      server-url: ${KEYCLOAK_SERVER_URL}
+      realm: ${KEYCLOAK_ADMIN_REALM}
+      client-id: ${KEYCLOAK_ADMIN_CLIENT_ID}
+      client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+      password: ${SPRING_DATA_REDIS_PASSWORD}
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        # Reject failed messages instead of requeueing forever; the
+        # queue's dead-letter exchange routes them to the DLQ.
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2s
+          multiplier: 2
+          max-interval: 10s
+
+  servlet:
+    multipart:
+      # HTTP-layer upload limits; the logo service enforces its own
+      # stricter app.media.logo.max-upload-size on top of these.
+      max-file-size: ${SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE:15MB}
+      max-request-size: ${SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE:20MB}
+
+server:
+
+  port: 8081
+
+management:
+
+  endpoints:
+
+    web:
+
+      exposure:
+        include: health,metrics
+
+  endpoint:
+
+    health:
+
+      probes:
+        enabled: true
+
+logging:
+
+  level:
+
+    org.springframework.security: INFO
+
+    org.springframework.web.client: DEBUG
+
+    org.springframework.web.reactive.function.client: DEBUG

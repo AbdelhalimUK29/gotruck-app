@@ -1,0 +1,16 @@
+{
+  "maxEffortLevel": "medium",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "ANTHROPIC_BASE_URL": "http://localhost:20128",
+    "ANTHROPIC_AUTH_TOKEN": "omniroute",
+    "ANTHROPIC_MODEL": "gotruck-claude",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gotruck-claude",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "gotruck-claude",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gotruck-claude",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits"
+  }
+}
